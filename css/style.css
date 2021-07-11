@@ -1,0 +1,81 @@
+html, body {
+  height: 100%;
+}
+
+.dark {
+  background: #CCC;
+}
+
+div.table-container {
+  margin-top: 1em;
+  display: block;
+  overflow-y: auto;
+  height: 600px;
+}
+
+div.table-container.smaller {
+  height: 200px !important;
+}
+
+.form--container {
+  width: 100%;
+  position: relative;
+}
+
+.fade-in {
+	opacity: 1;
+	animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 250ms;
+}
+
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.form--body {
+  top: 150px;
+  left: 50%;
+  width: 50%;
+  min-height: 200px;
+  position: absolute;
+  background-color: #f8f9fa ;
+  transform: translate(-50%, 0%);
+  z-index: 2;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.input-group>.input-group-prepend {
+  flex: 0 0 20%;
+}
+
+.input-group .input-group-text {
+  width: 100%;
+}

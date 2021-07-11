@@ -13,6 +13,7 @@ class Database {
     public static $avail_fields = "markov.available_fields";
     public static $class_laws = "markov.class_laws";
     public static $status_matrix = "markov.status_matrix";
+    public static $field_mapping = "markov.field_mapping";
 
     // connect to mongodb
     private function __construct()

@@ -6,16 +6,28 @@ require_once("../../configuration/db.php");
 require_once("../../utils/unicode.php");
 require_once("../../domain/matrix.php");
 
+function restructureArray ($scores, $fields)
+{
+    $array = array();
+    foreach ($fields as $value) {
+        $array[$value] = $scores[$value];
+    }
+
+    return $array;
+}
+
 $scores = json_decode($_POST["scores"], true);
 $n = intval($_POST["n"]);
 
 $db = Database::getInstance()->getDB();
-$query = new Query(["class" => intval($_POST['class'])]);
+$query = new Query(["lop" => $_POST['class']]);
 $status_matrix = $db->executeQuery(Database::$status_matrix, $query)->toArray();
+$fields = $db->executeQuery(Database::$avail_fields, $query)->toArray()[0]->mon_hoc;
 $count = count($status_matrix);
+$scores = restructureArray($scores, $fields);
 if ($count == 1) {
     try {
-        $result = (array) $status_matrix[0]->matrix;
+        $result = (array) $status_matrix[0]->ma_tran;
         $matrix = new Matrix(count($result), count($result[0]));
         $matrix->setArray($result);
 

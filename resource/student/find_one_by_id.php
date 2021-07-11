@@ -20,7 +20,7 @@ if (isset($_POST["id"]) || !empty($_POST["id"])) {
             "Not found"
         ]);
     } else {
-        $student[0]->date_of_birth = $student[0]->date_of_birth->toDateTime();
+        $student[0]->ngay_sinh = $student[0]->ngay_sinh->toDateTime();
         echo json_encode($student[0]);
     }
 } else {

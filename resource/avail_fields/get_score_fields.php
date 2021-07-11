@@ -8,8 +8,8 @@ require_once("../../configuration/db.php");
 require_once("../../utils/unicode.php");
 
 $db = Database::getInstance()->getDB();
-$class = ( isset($_POST["class"]) || !empty($_POST["class"]) )
-         ? $_POST["class"]
+$class = ( isset($_POST["lop"]) || !empty($_POST["lop"]) )
+         ? $_POST["lop"]
          : null;
 
 $student_id = ( isset($_POST["student_id"]) || !empty($_POST["student_id"]) )
@@ -25,7 +25,7 @@ if ($student_id != null) {
             ["_id" => new ObjectId($student_id)], 
             [
                 'projection' => [
-                    'class' => 1
+                    'lop' => 1
                 ],
                 'limit' => 1
             ]
@@ -37,23 +37,24 @@ if ($student_id != null) {
             exit;
         } else {
             $student = $student[0];
-            $query = new Query(["class" => $student->class]);
+            $query = new Query(["lop" => $student->lop]);
         }
     } catch (InvalidArgumentException $e) {
         echo json_encode(["status" => 400, "message" => $e->getMessage(), "query" => $query]);
         exit;
     }
 } else if ($class != null) {
-    $query = new Query(["class" => intval($class)]);
+    $query = new Query(["lop" => $class]);
 } else {
     $query = new Query([]);
 }
 
 // Execute query in collection "available_fields"
 $avail_fields = $db->executeQuery(Database::$avail_fields, $query)->toArray();
-if (count($avail_fields) > 1 || count($avail_fields) <= 0) {
+if (count($avail_fields) <= 0) {
     echo json_encode(["status" => 404, "message" => "Không tìm thấy lớp ".$class]);
-    exit;
+} else if (count($avail_fields) > 1) { 
+    echo json_encode(["status" => 400, "message" => "Lớp ".$class." không hợp lệ"]);
 } else {
     $data = $avail_fields[0];
     echo json_encode(["status" => 200, "data" => $data]);

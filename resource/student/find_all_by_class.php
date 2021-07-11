@@ -9,14 +9,14 @@ $db = Database::getInstance()->getDB();
 
 // Find all query
 $query = ( isset($_POST["class"]) || !empty($_POST["class"])) 
-         ? new Query(["class" => intval($_POST["class"])]) 
+         ? new Query(["lop" => $_POST["class"]]) 
          : new Query([]);
 // Execute query in collection "students"
 $students = $db->executeQuery(Database::$students, $query);
 $student_array = $students->toArray();
 $key_header_array = array();
 foreach ($student_array as $elem) {
-    foreach ($elem->subjects as $subj) {
+    foreach ($elem->mon_hoc as $subj) {
         array_push($key_header_array, $subj->key);
     }
 
